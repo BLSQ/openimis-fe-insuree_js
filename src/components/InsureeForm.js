@@ -54,7 +54,7 @@ class InsureeForm extends Component {
     insuree.residentialVillage = "";
     insuree.residentialDistrict = "";
     insuree.residentialProvince = "";
-    insuree.residentialHouseNumber = "";
+    insuree.houseNumber = "";
     return insuree;
   }
 

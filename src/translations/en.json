@@ -226,5 +226,19 @@
   "insuree.EnrolledFamiliesReport.dateTo": "To Date",
   "insuree.InsureeFamilyOverviewReport.dateFrom": "From Date",
   "insuree.InsureeFamilyOverviewReport.dateTo": "To Date",
-  "insuree.InsureeMissingPhotoReport.officer": "Officer"
+  "insuree.InsureeMissingPhotoReport.officer": "Officer",
+
+
+  "insuree.Insuree.motherName": "Mother's Name",
+  "insuree.Insuree.fatherName": "Father's Name",
+  "insuree.Insuree.placeOfBirth": "Place Of Birth",
+  "insuree.Insuree.occupation": "Occupation",
+  "insuree.Insuree.usualResidence": "Usual Residence",
+  "insuree.Insuree.residentialAlley": "Residential Alley",
+  "insuree.Insuree.registrationDate": "Registration Date",
+  "insuree.Insuree.residentialVillage": "Residential Village",
+  "insuree.Insuree.residentialDistrict": "Residential District",
+  "insuree.Insuree.residentialProvince": "Residential Province",
+  "insuree.Insuree.houseNumber": "House Number",
+  "insuree.Insuree.isLocal": "Is Local"
 }
