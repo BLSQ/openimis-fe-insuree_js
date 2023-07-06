@@ -287,7 +287,6 @@ export function formatInsureeGQL(mm, insuree) {
 
 
 
-    ${!!insuree.jsonExt ? `jsonExt: ${formatJsonField(insuree.jsonExt)}` : ""}
     ${!!insuree.placeOfBirth ? `placeOfBirth: "${formatGQLString(insuree.placeOfBirth)}"` : ""}
     ${!!insuree.registrationDate ? `registrationDate: "${formatGQLString(insuree.registrationDate)}"` : ""}
     ${!!insuree.residentialAlley ? `residentialAlley: "${formatGQLString(insuree.residentialAlley)}"` : ""}
