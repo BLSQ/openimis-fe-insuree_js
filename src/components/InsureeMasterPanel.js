@@ -179,6 +179,15 @@ class InsureeMasterPanel extends FormPanel {
                   <Grid item xs={6} className={classes.item}>
                     <TextInput
                       module="insuree"
+                      label="Insuree Wallet"
+                      readOnly={readOnly}
+                      value={!!edited && !!edited.passport ? edited.passport : ""}
+                      onChange={(v) => this.updateAttribute("insureeWallet", !!v ? v : "")}
+                    />
+                  </Grid>
+                  <Grid item xs={6} className={classes.item}>
+                    <TextInput
+                      module="insuree"
                       label="Insuree.email"
                       readOnly={readOnly}
                       value={!!edited && !!edited.email ? edited.email : ""}

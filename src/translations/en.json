@@ -240,5 +240,6 @@
   "insuree.Insuree.residentialDistrict": "Residential District",
   "insuree.Insuree.residentialProvince": "Residential Province",
   "insuree.Insuree.houseNumber": "House Number",
-  "insuree.Insuree.isLocal": "Is Local"
+  "insuree.Insuree.isLocal": "Is Local",
+  "Insuree Wallet": "Insuree Wallet"
 }
