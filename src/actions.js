@@ -58,6 +58,7 @@ const INSUREE_FULL_PROJECTION = (mm) => [
   "gender{code}",
   "education{id}",
   "profession{id}",
+  "insureeWallet",
   "marital",
   "cardIssued",
   "currentVillage" + mm.getProjection("location.Location.FlatProjection"),
@@ -265,6 +266,7 @@ export function formatInsureeGQL(mm, insuree) {
     ${!!insuree.marital ? `marital: "${insuree.marital}"` : ""}
     ${!!insuree.passport ? `passport: "${formatGQLString(insuree.passport)}"` : ""}
     ${!!insuree.phone ? `phone: "${formatGQLString(insuree.phone)}"` : ""}
+    ${!!insuree.insureeWallet ? `insureeWallet: "${formatGQLString(insuree.insureeWallet)}"` : ""}
     ${!!insuree.email ? `email: "${formatGQLString(insuree.email)}"` : ""}
     ${!!insuree.currentAddress ? `currentAddress: "${formatGQLString(insuree.currentAddress)}"` : ""}
     ${
