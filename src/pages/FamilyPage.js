@@ -33,8 +33,10 @@ class FamilyPage extends Component {
           lastName: family.headInsuree.lastName,
           otherNames: family.headInsuree.otherNames ?? "",
         }));
-      window.location=`${window.location.origin}${baseApiUrl}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
-      //this.props.history.push(`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
+      // console.log("Redirecting to claim page", window.location.origin, baseApiUrl, `/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
+      // console.log("Redirecting to claim page 2 ",`${window.location.origin}${baseApiUrl}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
+      // window.location=`${window.location.origin}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
+      this.props.history.push(`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
     } else {
       this.props.updateFamily(
         this.props.modulesManager,
