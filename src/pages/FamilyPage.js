@@ -33,7 +33,7 @@ class FamilyPage extends Component {
           lastName: family.headInsuree.lastName,
           otherNames: family.headInsuree.otherNames ?? "",
         }));
-      window.location=`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
+      window.location=`${window.location.origin}${baseApiUrl}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
       //this.props.history.push(`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
     } else {
       this.props.updateFamily(
