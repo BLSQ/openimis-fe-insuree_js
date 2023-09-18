@@ -122,13 +122,20 @@ class FamilyForm extends Component {
   };
 
   canSave = () => {
+    console.log("Family canSave")
     if (!this.state.family.location) return false;
     if (!this.state.family.headInsuree) return false;
     if (!this.state.family.headInsuree.chfId) return false;
     if (!this.props.isChfIdValid) return false;
     if (!this.state.family.headInsuree.lastName) return false;
-    if (!this.state.family.headInsuree.otherNames) return false;
+    // if (!this.state.family.headInsuree.otherNames) return false;
     if (!this.state.family.headInsuree.dob) return false;
+    if (!this.state.family.headInsuree.jsonExt
+        || !this.state.family.headInsuree.jsonExt.rural
+        || !this.state.family.headInsuree.jsonExt.idp
+        || !this.state.family.headInsuree.jsonExt.vulnerable
+        || !this.state.family.headInsuree.jsonExt.disability
+    ) return false;
     if (
       !!this.state.family.headInsuree.photo &&
       (!this.state.family.headInsuree.photo.date || !this.state.family.headInsuree.photo.officerId)

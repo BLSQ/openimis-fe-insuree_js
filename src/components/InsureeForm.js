@@ -137,12 +137,14 @@ class InsureeForm extends Component {
   };
 
   canSave = () => {
+    console.log("insuree can save");
     if (!this.props.isInsureeNumberValid) return false;
     if (!this.state.insuree.chfId) return false;
     if (!this.state.insuree.lastName) return false;
-    if (!this.state.insuree.otherNames) return false;
+    //if (!this.state.insuree.otherNames) return false;
     if (!this.state.insuree.dob) return false;
     if (!this.state.insuree.gender) return false;
+    if (!this.state.insuree.rural) return false;
     if (this.state.lockNew) return false;
     if (!!this.state.insuree.photo && (!this.state.insuree.photo.date || !this.state.insuree.photo.officerId))
       return false;

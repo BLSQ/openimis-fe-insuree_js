@@ -26,6 +26,8 @@ class InsureeChfIdPicker extends Component {
         search: !!props.value ? props.value.chfId : null,
         selected: props.value,
       }));
+      // console.log("fetching ", this.props.value.chfId);
+      // this.props.fetchInsuree(this.props.modulesManager, this.props.value.chfId)
     }
   }
 
@@ -60,7 +62,7 @@ class InsureeChfIdPicker extends Component {
 
   formatInsuree(insuree) {
     if (!insuree) return null;
-    return `${insuree.otherNames} ${insuree.lastName}`;
+    return `${insuree.otherNames ?? ""} ${insuree.lastName}`;
   }
 
   render() {

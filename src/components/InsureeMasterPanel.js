@@ -10,7 +10,10 @@ import {
   TextInput,
   Contributions,
   withModulesManager,
+  ConstantBasedPicker,
 } from "@openimis/fe-core";
+import {YES_NO} from "../constants";
+import moment from "moment";
 
 const styles = (theme) => ({
   paper: theme.paper.paper,
@@ -25,6 +28,17 @@ const INSUREE_INSUREE_CONTRIBUTION_KEY = "insuree.Insuree";
 const INSUREE_INSUREE_PANELS_CONTRIBUTION_KEY = "insuree.Insuree.panels";
 
 class InsureeMasterPanel extends FormPanel {
+
+  updateExts = (updates) => {
+    let data = { ...this.state.data };
+    if (data["jsonExt"] === undefined) {
+      data["jsonExt"] = updates;
+    } else {
+      data["jsonExt"] = { ...data["jsonExt"], ...updates };
+    }
+    this.props.onEditedChanged(data);
+  };
+
   render() {
     const {
       intl,
@@ -36,6 +50,24 @@ class InsureeMasterPanel extends FormPanel {
       actions,
       edited_id,
     } = this.props;
+
+    let ageYears = null;
+    let ageMonths = null;
+    let ageDays = null;
+    if (!!edited && !!edited.dob) {
+      const now = moment();
+      const dob = moment(edited.dob);
+      ageYears = now.diff(dob, "years");
+      ageMonths = now.diff(dob, "months");
+      if (ageMonths > 24) {
+        ageMonths = null;
+      }
+      ageDays = now.diff(dob, "days");
+      if (ageDays > 60) {
+        ageDays = null;
+      }
+    }
+
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -46,6 +78,7 @@ class InsureeMasterPanel extends FormPanel {
                   <FormattedMessage module="insuree" id={title} values={titleParams} />
                 </Typography>
               </Grid>
+{/*
               <Grid item xs={9}>
                 <Grid container justify="flex-end">
                   {!!edited &&
@@ -73,6 +106,7 @@ class InsureeMasterPanel extends FormPanel {
                     })}
                 </Grid>
               </Grid>
+*/}
             </Grid>
             <Divider />
             <Grid container className={classes.item}>
@@ -88,7 +122,7 @@ class InsureeMasterPanel extends FormPanel {
                   onChange={(v) => this.updateAttribute("chfId", v)}
                 />
               </Grid>
-              <Grid item xs={4} className={classes.item}>
+              <Grid item xs={5} className={classes.item}>
                 <TextInput
                   module="insuree"
                   label="Insuree.lastName"
@@ -98,6 +132,19 @@ class InsureeMasterPanel extends FormPanel {
                   onChange={(v) => this.updateAttribute("lastName", v)}
                 />
               </Grid>
+              <Grid item xs={3} className={classes.item}>
+                <PublishedComponent
+                  pubRef="insuree.InsureeGenderPicker"
+                  value={!!edited && !!edited.gender ? edited.gender.code : ""}
+                  module="insuree"
+                  readOnly={readOnly}
+                  withNull={true}
+                  required={true}
+                  onChange={(v) => this.updateAttribute("gender", { code: v })}
+                />
+              </Grid>
+
+{/*
               <Grid item xs={4} className={classes.item}>
                 <TextInput
                   module="insuree"
@@ -108,7 +155,8 @@ class InsureeMasterPanel extends FormPanel {
                   onChange={(v) => this.updateAttribute("otherNames", v)}
                 />
               </Grid>
-              <Grid item xs={8}>
+*/}
+              <Grid item xs={12}>
                 <Grid container>
                   <Grid item xs={3} className={classes.item}>
                     <PublishedComponent
@@ -122,17 +170,61 @@ class InsureeMasterPanel extends FormPanel {
                       onChange={(v) => this.updateAttribute("dob", v)}
                     />
                   </Grid>
-                  <Grid item xs={3} className={classes.item}>
-                    <PublishedComponent
-                      pubRef="insuree.InsureeGenderPicker"
-                      value={!!edited && !!edited.gender ? edited.gender.code : ""}
+                  <Grid item xs={2} className={classes.item}>
+                    <TextInput
                       module="insuree"
+                      label="Insuree.ageYears"
+                      required={false}
                       readOnly={readOnly}
-                      withNull={true}
-                      required={true}
-                      onChange={(v) => this.updateAttribute("gender", { code: v })}
+                      value={!!edited && ageYears ? ageYears : ""}
+                      type="number"
+                      onBlur={(e) => {
+                        const v = e.target.valueAsNumber;
+                        if (!isNaN(v)) {
+                          const approxDateOfBirth = moment().subtract(v, 'years').format('YYYY-MM-DD');
+                          this.updateAttribute("dob", approxDateOfBirth)
+                          // return this.updateExts({dob_is_approx: true});
+                        }
+                      }}
                     />
                   </Grid>
+                  <Grid item xs={2} className={classes.item}>
+                    <TextInput
+                      module="insuree"
+                      label="Insuree.ageMonths"
+                      required={false}
+                      readOnly={readOnly}
+                      value={!!edited && ageMonths ? ageMonths : ""}
+                      type="number"
+                      onBlur={(e) => {
+                        const v = e.target.valueAsNumber;
+                        if (!isNaN(v)) {
+                          const approxDateOfBirth = moment().subtract(v, 'months').format('YYYY-MM-DD');
+                          return this.updateAttributes({"dob": approxDateOfBirth});
+                          // return this.updateExts({dob_is_approx: true});
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={2} className={classes.item}>
+                    <TextInput
+                      module="insuree"
+                      label="Insuree.ageDays"
+                      required={false}
+                      readOnly={readOnly}
+                      value={!!edited && ageDays ? ageDays : ""}
+                      type="number"
+                      onBlur={(e) => {
+                        const v = e.target.valueAsNumber;
+                        if (!isNaN(v)) {
+                          const approxDateOfBirth = moment().subtract(v, 'days').format('YYYY-MM-DD');
+                          return this.updateAttributes({"dob": approxDateOfBirth});
+                          // return this.updateExts({dob_is_approx: true});
+                        }
+                      }}
+                    />
+                  </Grid>
+{/*
                   <Grid item xs={3} className={classes.item}>
                     <PublishedComponent
                       pubRef="insuree.InsureeMaritalStatusPicker"
@@ -167,7 +259,8 @@ class InsureeMasterPanel extends FormPanel {
                       onChangeAddress={(v) => this.updateAttribute("currentAddress", v)}
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.item}>
+*/}
+                  <Grid item xs={3} className={classes.item}>
                     <TextInput
                       module="insuree"
                       label="Insuree.phone"
@@ -176,60 +269,59 @@ class InsureeMasterPanel extends FormPanel {
                       onChange={(v) => this.updateAttribute("phone", v)}
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.item}>
-                    <TextInput
-                      module="insuree"
-                      label="Insuree.email"
-                      readOnly={readOnly}
-                      value={!!edited && !!edited.email ? edited.email : ""}
-                      onChange={(v) => this.updateAttribute("email", v)}
-                    />
+                  <Divider />
+                  <Grid item xs={3} className={classes.item}>
+                    <ConstantBasedPicker
+                        module="insuree"
+                        label="Family.rural"
+                        required
+                        onChange={(value) =>
+                          this.updateExts({rural: value})
+                        }
+                        constants={YES_NO}
+                        withNull
+                      />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
-                    <PublishedComponent
-                      pubRef="insuree.ProfessionPicker"
-                      module="insuree"
-                      value={!!edited && !!edited.profession ? edited.profession.id : null}
-                      readOnly={readOnly}
-                      withNull={true}
-                      nullLabel={formatMessage(intl, "insuree", "Profession.none")}
-                      onChange={(v) => this.updateAttribute("profession", { id: v })}
-                    />
+                    <ConstantBasedPicker
+                        module="insuree"
+                        label="Family.idp"
+                        required
+                        onChange={(value) =>
+                          this.updateExts({idp: value})
+                        }
+                        constants={YES_NO}
+                        withNull
+                      />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
-                    <PublishedComponent
-                      pubRef="insuree.EducationPicker"
-                      module="insuree"
-                      value={!!edited && !!edited.education ? edited.education.id : ""}
-                      readOnly={readOnly}
-                      withNull={true}
-                      nullLabel={formatMessage(intl, "insuree", "insuree.Education.none")}
-                      onChange={(v) => this.updateAttribute("education", { id: v })}
-                    />
+                    <ConstantBasedPicker
+                        module="insuree"
+                        label="Family.vulnerable"
+                        required
+                        onChange={(value) =>
+                          this.updateExts({vulnerable: value})
+                        }
+                        constants={YES_NO}
+                        withNull
+                      />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
-                    <PublishedComponent
-                      pubRef="insuree.IdentificationTypePicker"
-                      module="insuree"
-                      value={!!edited && !!edited.typeOfId ? edited.typeOfId.code : null}
-                      readOnly={readOnly}
-                      withNull={true}
-                      nullLabel={formatMessage(intl, "insuree", "IdentificationType.none")}
-                      onChange={(v) => this.updateAttribute("typeOfId", { code: v })}
-                    />
+                    <ConstantBasedPicker
+                        module="insuree"
+                        required
+                        label="Family.disability"
+                        onChange={(value) =>
+                          this.updateExts({disability: value})
+                        }
+                        constants={YES_NO}
+                        withNull
+                      />
                   </Grid>
-                  <Grid item xs={3} className={classes.item}>
-                    <TextInput
-                      module="insuree"
-                      label="Insuree.passport"
-                      readOnly={readOnly}
-                      value={!!edited && !!edited.passport ? edited.passport : ""}
-                      onChange={(v) => this.updateAttribute("passport", !!v ? v : null)}
-                    />
-                  </Grid>
+
                 </Grid>
               </Grid>
-              <Grid item xs={4} className={classes.item}>
+{/*              <Grid item xs={4} className={classes.item}>
                 <PublishedComponent
                   pubRef="insuree.Avatar"
                   photo={!!edited ? edited.photo : null}
@@ -238,6 +330,7 @@ class InsureeMasterPanel extends FormPanel {
                   onChange={(v) => this.updateAttribute("photo", !!v ? v : null)}
                 />
               </Grid>
+*/}
               <Contributions
                 {...this.props}
                 updateAttribute={this.updateAttribute}

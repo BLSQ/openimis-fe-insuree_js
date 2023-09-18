@@ -18,15 +18,23 @@ class FamilyPage extends Component {
     historyPush(this.props.modulesManager, this.props.history, "insuree.route.family");
   };
 
-  save = (family) => {
+  save = async (family) => {
     if (!family.uuid) {
-      this.props.createFamily(
+      await this.props.createFamily(
         this.props.modulesManager,
         family,
         formatMessageWithValues(this.props.intl, "insuree", "CreateFamily.mutationLabel", {
           label: familyLabel(family),
         }),
       );
+      localStorage.setItem('claimHealthFacilityChfID', JSON.stringify(
+        {
+          chfId: family.headInsuree.chfId,
+          lastName: family.headInsuree.lastName,
+          otherNames: family.headInsuree.otherNames ?? "",
+        }));
+      window.location=`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
+      //this.props.history.push(`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
     } else {
       this.props.updateFamily(
         this.props.modulesManager,
