@@ -3,7 +3,7 @@ import { injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withTheme, withStyles } from "@material-ui/core/styles";
-import { formatMessageWithValues, withModulesManager, withHistory, historyPush } from "@openimis/fe-core";
+import { formatMessageWithValues, withModulesManager, withHistory, historyPush, decodeId } from "@openimis/fe-core";
 import FamilyForm from "../components/FamilyForm";
 import { createFamily, updateFamily, clearInsuree } from "../actions";
 import { RIGHT_FAMILY, RIGHT_FAMILY_ADD, RIGHT_FAMILY_EDIT } from "../constants";
@@ -20,29 +20,26 @@ class FamilyPage extends Component {
 
   save = async (family) => {
     if (!family.uuid) {
-      await this.props.createFamily(
-      this.props.createFamily(
       const createFamilyResult = await this.props.createFamily(
         this.props.modulesManager,
         family,
         formatMessageWithValues(this.props.intl, "insuree", "CreateFamily.mutationLabel", {
           label: familyLabel(family),
         }),
-        'families {family{id uuid headInsuree { id }}}'
+        'families {family{id uuid headInsuree { id chfId }}}'
       );
       if (createFamilyResult
           && createFamilyResult.status === 2
           && createFamilyResult.families[0]?.family?.headInsuree?.id
       ) {
-        console.log("Family created with head insuree id", createFamilyResult.families[0]?.family?.headInsuree?.id);
+        console.log("Family created with head insuree", createFamilyResult.families[0]?.family?.headInsuree);
           localStorage.setItem('claimHealthFacilityChfID', JSON.stringify(
             {
-              chfId: family.headInsuree.chfId,
+              id: decodeId(createFamilyResult.families[0]?.family?.headInsuree?.id),
+              chfId: createFamilyResult.families[0]?.family?.headInsuree?.chfId,
               lastName: family.headInsuree.lastName,
               otherNames: family.headInsuree.otherNames ?? "",
             }));
-          // console.log("Redirecting to claim page", window.location.origin, baseApiUrl, `/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
-          // console.log("Redirecting to claim page 2 ",`${window.location.origin}${baseApiUrl}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
           // window.location=`${window.location.origin}/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`;
           this.props.history.push(`/claim/healthFacilities/claim?chfId=${family.headInsuree.chfId}`);
       }

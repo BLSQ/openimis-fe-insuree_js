@@ -63,14 +63,14 @@ class RawFilter extends Component {
             onChange={(v) => this._onChange("lastName", v)}
           />
         </Grid>
-        <Grid item xs={4} className={classes.item}>
-          <TextInput
-            module="insuree"
-            label="Insuree.otherNames"
-            value={this.state.otherNames}
-            onChange={(v) => this._onChange("otherNames", v)}
-          />
-        </Grid>
+        {/*<Grid item xs={4} className={classes.item}>*/}
+        {/*  <TextInput*/}
+        {/*    module="insuree"*/}
+        {/*    label="Insuree.otherNames"*/}
+        {/*    value={this.state.otherNames}*/}
+        {/*    onChange={(v) => this._onChange("otherNames", v)}*/}
+        {/*  />*/}
+        {/*</Grid>*/}
       </Grid>
     );
   }
