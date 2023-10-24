@@ -283,7 +283,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
-                        value={!!edited && edited.jsonExt.rural}
+                        value={!!edited && !!edited.jsonExt && edited.jsonExt.rural}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -296,7 +296,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
-                        value={!!edited && edited.jsonExt.idp}
+                        value={!!edited && !!edited.jsonExt && edited.jsonExt.idp}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -309,7 +309,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
-                        value={!!edited && edited.jsonExt.vulnerable}
+                        value={!!edited && !!edited.jsonExt && edited.jsonExt.vulnerable}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -322,7 +322,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
-                        value={!!edited && edited.jsonExt.disability}
+                        value={!!edited && !!edited.jsonExt && edited.jsonExt.disability}
                       />
                   </Grid>
 
