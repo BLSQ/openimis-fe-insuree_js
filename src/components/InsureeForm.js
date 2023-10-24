@@ -70,7 +70,7 @@ class InsureeForm extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.fetchedInsuree !== this.props.fetchedInsuree && !!this.props.fetchedInsuree) {
       var insuree = this.props.insuree || {};
-      insuree.ext = !!insuree.jsonExt ? JSON.parse(insuree.jsonExt) : {};
+      insuree.jsonExt = !!insuree.jsonExt ? JSON.parse(insuree.jsonExt) : {};
       this.setState({ insuree, insuree_uuid: insuree.uuid, lockNew: false, newInsuree: false });
     } else if (prevProps.insuree_uuid && !this.props.insuree_uuid) {
       this.setState({ insuree: this._newInsuree(), newInsuree: true, lockNew: false, insuree_uuid: null });
@@ -138,13 +138,20 @@ class InsureeForm extends Component {
 
   canSave = () => {
     console.log("insuree can save");
-    if (!this.props.isInsureeNumberValid) return false;
+    // if (!this.props.isInsureeNumberValid) return false;
     if (!this.state.insuree.chfId) return false;
     if (!this.state.insuree.lastName) return false;
     //if (!this.state.insuree.otherNames) return false;
     if (!this.state.insuree.dob) return false;
     if (!this.state.insuree.gender) return false;
-    if (!this.state.insuree.rural) return false;
+    // if (!this.state.insuree.rural) return false;
+    console.log("*** state insuree = ", this.state.insuree);
+    if (!this.state.insuree.jsonExt
+        || !this.state.insuree.jsonExt.rural
+        || !this.state.insuree.jsonExt.idp
+        || !this.state.insuree.jsonExt.vulnerable
+        || !this.state.insuree.jsonExt.disability
+    ) return false;
     if (this.state.lockNew) return false;
     if (!!this.state.insuree.photo && (!this.state.insuree.photo.date || !this.state.insuree.photo.officerId))
       return false;

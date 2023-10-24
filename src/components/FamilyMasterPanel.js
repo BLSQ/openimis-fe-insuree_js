@@ -28,6 +28,7 @@ const styles = (theme) => ({
 });
 
 class FamilyMasterPanel extends FormPanel {
+
   headSummary = () => {
     const { classes, edited } = this.props;
     return (
@@ -38,6 +39,7 @@ class FamilyMasterPanel extends FormPanel {
             label="Family.headInsuree.chfId"
             readOnly={true}
             value={!edited || !edited.headInsuree ? "" : edited.headInsuree.chfId}
+            disabled
           />
         </Grid>
         <Grid item xs={3} className={classes.item}>

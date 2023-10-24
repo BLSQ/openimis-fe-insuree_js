@@ -55,6 +55,7 @@ const INSUREE_FULL_PROJECTION = (mm) => [
   "email",
   "phone",
   "healthFacility" + mm.getProjection("location.HealthFacilityPicker.projection"),
+  "jsonExt"
 ];
 
 export const INSUREE_PICKER_PROJECTION = ["id", "uuid", "chfId", "lastName", "otherNames"];

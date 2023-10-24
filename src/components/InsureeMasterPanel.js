@@ -51,6 +51,8 @@ class InsureeMasterPanel extends FormPanel {
       edited_id,
     } = this.props;
 
+    console.log("*** edited = ", edited);
+
     let ageYears = null;
     let ageMonths = null;
     let ageDays = null;
@@ -115,11 +117,12 @@ class InsureeMasterPanel extends FormPanel {
                   pubRef="insuree.InsureeNumberInput"
                   module="insuree"
                   label="Insuree.chfId"
-                  required={true}
-                  readOnly={readOnly}
+                  // required={true}
+                  readOnly={true}
                   value={edited?.chfId}
                   edited_id={edited_id}
                   onChange={(v) => this.updateAttribute("chfId", v)}
+                  disabled={true}
                 />
               </Grid>
               <Grid item xs={5} className={classes.item}>
@@ -280,6 +283,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
+                        value={edited.jsonExt.rural}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -292,6 +296,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
+                        value={edited.jsonExt.idp}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -304,6 +309,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
+                        value={edited.jsonExt.vulnerable}
                       />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -316,6 +322,7 @@ class InsureeMasterPanel extends FormPanel {
                         }
                         constants={YES_NO}
                         withNull
+                        value={edited.jsonExt.disability}
                       />
                   </Grid>
 
