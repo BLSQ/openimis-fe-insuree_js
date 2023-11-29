@@ -14,6 +14,7 @@ import {
 } from "@openimis/fe-core";
 import {YES_NO} from "../constants";
 import moment from "moment";
+import _ from "lodash";
 
 const styles = (theme) => ({
   paper: theme.paper.paper,
@@ -38,6 +39,11 @@ class InsureeMasterPanel extends FormPanel {
     }
     this.props.onEditedChanged(data);
   };
+
+  updateAttributes = (updates) => {
+    let data = _.merge({}, this.state.data, updates);
+    this.props.onEditedChanged(data);
+};
 
   render() {
     const {
@@ -185,8 +191,12 @@ class InsureeMasterPanel extends FormPanel {
                         const v = e.target.valueAsNumber;
                         if (!isNaN(v)) {
                           const approxDateOfBirth = moment().subtract(v, 'years').format('YYYY-MM-DD');
-                          this.updateAttribute("dob", approxDateOfBirth)
-                          // return this.updateExts({dob_is_approx: true});
+                          let jsonExt = {
+                            ageMonths: null,
+                            ageYears: v,
+                            ageDays: null,
+                          }
+                          this.updateAttributes({"dob": approxDateOfBirth, "jsonExt": jsonExt});
                         }
                       }}
                     />
@@ -203,8 +213,12 @@ class InsureeMasterPanel extends FormPanel {
                         const v = e.target.valueAsNumber;
                         if (!isNaN(v)) {
                           const approxDateOfBirth = moment().subtract(v, 'months').format('YYYY-MM-DD');
-                          return this.updateAttributes({"dob": approxDateOfBirth});
-                          // return this.updateExts({dob_is_approx: true});
+                          let jsonExt = {
+                            ageMonths: v,
+                            ageYears: null,
+                            ageDays: null,
+                          }
+                          this.updateAttributes({"dob": approxDateOfBirth, "jsonExt": jsonExt});
                         }
                       }}
                     />
@@ -221,8 +235,12 @@ class InsureeMasterPanel extends FormPanel {
                         const v = e.target.valueAsNumber;
                         if (!isNaN(v)) {
                           const approxDateOfBirth = moment().subtract(v, 'days').format('YYYY-MM-DD');
-                          return this.updateAttributes({"dob": approxDateOfBirth});
-                          // return this.updateExts({dob_is_approx: true});
+                          let jsonExt = {
+                            ageMonths: null,
+                            ageYears: null,
+                            ageDays: v,
+                          }
+                          this.updateAttributes({"dob": approxDateOfBirth, "jsonExt": jsonExt});
                         }
                       }}
                     />
