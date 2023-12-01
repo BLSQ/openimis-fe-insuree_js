@@ -11,7 +11,7 @@ import {
   graphqlWithVariables,
 } from "@openimis/fe-core";
 
-const FAMILY_HEAD_PROJECTION = "headInsuree{id,uuid,chfId,lastName,otherNames,email,phone,dob,gender{code}}";
+const FAMILY_HEAD_PROJECTION = "headInsuree{id,uuid,chfId,lastName,otherNames,email,phone,dob,gender{code},jsonExt}";
 
 const FAMILY_FULL_PROJECTION = (mm) => [
   "id",
@@ -26,6 +26,7 @@ const FAMILY_FULL_PROJECTION = (mm) => [
   FAMILY_HEAD_PROJECTION,
   "location" + mm.getProjection("location.Location.FlatProjection"),
   "clientMutationId",
+  "jsonExt",
 ];
 
 export const FAMILY_PICKER_PROJECTION = ["id", "uuid", "headInsuree{id chfId uuid lastName otherNames}"];
@@ -85,6 +86,7 @@ export function fetchInsuree(mm, chfid) {
       "photo{folder,filename,photo}",
       "gender{code, gender, altLanguage}",
       "healthFacility" + mm.getProjection("location.HealthFacilityPicker.projection"),
+      "jsonExt",
     ],
   );
   return graphql(payload, "INSUREE_INSUREE");
@@ -114,15 +116,16 @@ export function fetchFamilySummaries(mm, filters) {
     "confirmationNo",
     "validityFrom",
     "validityTo",
-    "headInsuree{id,uuid,chfId,lastName,otherNames,email,phone, dob}",
+    "headInsuree{id,uuid,chfId,lastName,otherNames,email,phone,dob,jsonExt}",
     "location" + mm.getProjection("location.Location.FlatProjection"),
+    "jsonExt",
   ];
   const payload = formatPageQueryWithCount("families", filters, projections);
   return graphql(payload, "INSUREE_FAMILIES");
 }
 
 export function fetchFamilyMembers(mm, filters) {
-  let projections = ["uuid", "chfId", "otherNames", "lastName", "head", "phone", "gender{code}", "dob", "cardIssued"];
+  let projections = ["uuid", "chfId", "otherNames", "lastName", "head", "phone", "gender{code}", "dob", "cardIssued", "jsonExt"];
   const payload = formatPageQueryWithCount("familyMembers", filters, projections);
   return graphql(payload, "INSUREE_FAMILY_MEMBERS");
 }
@@ -224,6 +227,7 @@ export function fetchInsureeSummaries(mm, filters) {
     "marital",
     "family{uuid,location" + mm.getProjection("location.Location.FlatProjection") + "}",
     "currentVillage" + mm.getProjection("location.Location.FlatProjection"),
+    "jsonExt",
   ];
   const payload = formatPageQueryWithCount("insurees", filters, projections);
   return graphql(payload, "INSUREE_INSUREES");

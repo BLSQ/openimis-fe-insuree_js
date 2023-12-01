@@ -286,64 +286,12 @@ class InsureeMasterPanel extends FormPanel {
                       module="insuree"
                       label="Insuree.phone"
                       readOnly={readOnly}
+                      required
                       value={!!edited && !!edited.phone ? edited.phone : ""}
                       onChange={(v) => this.updateAttribute("phone", v)}
                     />
                   </Grid>
                   <Divider />
-                  <Grid item xs={3} className={classes.item}>
-                    <ConstantBasedPicker
-                        module="insuree"
-                        label="Family.rural"
-                        required
-                        onChange={(value) =>
-                          this.updateExts({rural: value})
-                        }
-                        constants={YES_NO}
-                        withNull
-                        value={!!edited && !!edited.jsonExt && edited.jsonExt.rural}
-                      />
-                  </Grid>
-                  <Grid item xs={3} className={classes.item}>
-                    <ConstantBasedPicker
-                        module="insuree"
-                        label="Family.idp"
-                        required
-                        onChange={(value) =>
-                          this.updateExts({idp: value})
-                        }
-                        constants={YES_NO}
-                        withNull
-                        value={!!edited && !!edited.jsonExt && edited.jsonExt.idp}
-                      />
-                  </Grid>
-                  <Grid item xs={3} className={classes.item}>
-                    <ConstantBasedPicker
-                        module="insuree"
-                        label="Family.vulnerable"
-                        required
-                        onChange={(value) =>
-                          this.updateExts({vulnerable: value})
-                        }
-                        constants={YES_NO}
-                        withNull
-                        value={!!edited && !!edited.jsonExt && edited.jsonExt.vulnerable}
-                      />
-                  </Grid>
-                  <Grid item xs={3} className={classes.item}>
-                    <ConstantBasedPicker
-                        module="insuree"
-                        required
-                        label="Family.disability"
-                        onChange={(value) =>
-                          this.updateExts({disability: value})
-                        }
-                        constants={YES_NO}
-                        withNull
-                        value={!!edited && !!edited.jsonExt && edited.jsonExt.disability}
-                      />
-                  </Grid>
-
                 </Grid>
               </Grid>
 {/*              <Grid item xs={4} className={classes.item}>
