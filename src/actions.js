@@ -30,20 +30,6 @@ const FAMILY_FULL_PROJECTION = (mm) => [
 export const FAMILY_PICKER_PROJECTION = ["id", "uuid", "headInsuree{id chfId uuid lastName otherNames}"];
 
 const INSUREE_FULL_PROJECTION = (mm) => [
-  // eCVRS fields
-  "placeOfBirth",
-  "registrationDate",
-  "residentialAlley",
-  "isLocal",
-  "usualResidence",
-  "occupation",
-  "fatherName",
-  "motherName",
-  "residentialVillage",
-  "residentialDistrict",
-  "residentialProvince",
-  "houseNumber",
-  // end eCVRS fields
   "id",
   "uuid",
   "chfId",
@@ -286,22 +272,8 @@ export function formatInsureeGQL(mm, insuree) {
         ? `healthFacilityId: ${decodeId(insuree.healthFacility.id)}`
         : ""
     }
-
-
-
-    ${!!insuree.placeOfBirth ? `placeOfBirth: "${formatGQLString(insuree.placeOfBirth)}"` : ""}
-    ${!!insuree.registrationDate ? `registrationDate: "${formatGQLString(insuree.registrationDate)}"` : ""}
-    ${!!insuree.residentialAlley ? `residentialAlley: "${formatGQLString(insuree.residentialAlley)}"` : ""}
-    ${!!insuree.isLocal ? `isLocal: "${formatGQLString(insuree.isLocal)}"` : ""}
-    ${!!insuree.usualResidence ? `usualResidence: "${formatGQLString(insuree.usualResidence)}"` : ""}
-    ${!!insuree.occupation ? `occupation: "${formatGQLString(insuree.occupation)}"` : ""}
-    ${!!insuree.fatherName ? `fatherName: "${formatGQLString(insuree.fatherName)}"` : ""}
-    ${!!insuree.motherName ? `motherName: "${formatGQLString(insuree.motherName)}"` : ""}
-    ${!!insuree.residentialVillage ? `residentialVillage: "${formatGQLString(insuree.residentialVillage)}"` : ""}
-    ${!!insuree.residentialDistrict ? `residentialDistrict: "${formatGQLString(insuree.residentialDistrict)}"` : ""}
-    ${!!insuree.residentialProvince ? `residentialProvince: "${formatGQLString(insuree.residentialProvince)}"` : ""}
-    ${!!insuree.houseNumber ? `houseNumber "${formatGQLString(insuree.houseNumber)}"` : ""}
-    `;
+    ${!!insuree.jsonExt ? `jsonExt: ${formatJsonField(insuree.jsonExt)}` : ""}
+  `;
 }
 
 export function formatFamilyGQL(mm, family) {
