@@ -394,7 +394,7 @@ class FamilyInsureesOverview extends PagedDataHandler {
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               {actions.map((a, idx) => {
                 return (
                   <Grid item key={`form-action-${idx}`} className={classes.paperHeaderAction}>

@@ -25,6 +25,16 @@ const INSUREE_INSUREE_CONTRIBUTION_KEY = "insuree.Insuree";
 const INSUREE_INSUREE_PANELS_CONTRIBUTION_KEY = "insuree.Insuree.panels";
 
 class InsureeMasterPanel extends FormPanel {
+
+  onGenderChange(gender) {
+    this.updateAttributes({
+      "gender": {
+        "code": gender
+      },
+      "isPregnant": false,
+    })
+  }
+
   render() {
     const {
       intl,
@@ -130,7 +140,8 @@ class InsureeMasterPanel extends FormPanel {
                       readOnly={readOnly}
                       withNull={true}
                       required={true}
-                      onChange={(v) => this.updateAttribute("gender", { code: v })}
+                      onChange={(v) => this.onGenderChange(v)}
+                      // onChange={(v) => this.updateAttribute("gender", { code: v })}
                     />
                   </Grid>
                   <Grid item xs={3} className={classes.item}>
@@ -234,6 +245,19 @@ class InsureeMasterPanel extends FormPanel {
                       readOnly={readOnly}
                       value={!!edited && !!edited.passport ? edited.passport : ""}
                       onChange={(v) => this.updateAttribute("passport", !!v ? v : null)}
+                    />
+                  </Grid>
+                  <Grid item xs={1} className={classes.item}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={!!edited && !!edited.isPregnant}
+                          disabled={readOnly || edited?.gender?.code !== "F"}
+                          onChange={(e) => this.updateAttribute("isPregnant", !edited.isPregnant)}
+                        />
+                      }
+                      label={formatMessage(intl, "insuree", "Insuree.isPregnant")}
                     />
                   </Grid>
                 </Grid>

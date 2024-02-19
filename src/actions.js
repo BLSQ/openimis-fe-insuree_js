@@ -55,6 +55,7 @@ const INSUREE_FULL_PROJECTION = (mm) => [
   "head",
   "email",
   "phone",
+  "isPregnant",
   "healthFacility" + mm.getProjection("location.HealthFacilityPicker.projection"),
 ];
 
@@ -272,6 +273,7 @@ export function formatInsureeGQL(mm, insuree) {
         ? `healthFacilityId: ${decodeId(insuree.healthFacility.id)}`
         : ""
     }
+    ${!!insuree.isPregnant ? `isPregnant: ${insuree.isPregnant}` : ""}
     ${!!insuree.jsonExt ? `jsonExt: ${formatJsonField(insuree.jsonExt)}` : ""}
   `;
 }
