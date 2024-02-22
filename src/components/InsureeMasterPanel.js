@@ -247,7 +247,7 @@ class InsureeMasterPanel extends FormPanel {
                       onChange={(v) => this.updateAttribute("passport", !!v ? v : null)}
                     />
                   </Grid>
-                  <Grid item xs={1} className={classes.item}>
+                  <Grid item xs={2} className={classes.item}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -258,6 +258,19 @@ class InsureeMasterPanel extends FormPanel {
                         />
                       }
                       label={formatMessage(intl, "insuree", "Insuree.isPregnant")}
+                    />
+                  </Grid>
+                  <Grid item xs={1} className={classes.item}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={!!edited && !!edited.isFormalSector}
+                          disabled={readOnly}
+                          onChange={(e) => this.updateAttribute("isFormalSector", !edited.isFormalSector)}
+                        />
+                      }
+                      label={formatMessage(intl, "insuree", "Insuree.isFormalSector")}
                     />
                   </Grid>
                 </Grid>

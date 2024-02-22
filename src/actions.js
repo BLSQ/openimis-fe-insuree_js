@@ -56,6 +56,7 @@ const INSUREE_FULL_PROJECTION = (mm) => [
   "email",
   "phone",
   "isPregnant",
+  "isFormalSector",
   "healthFacility" + mm.getProjection("location.HealthFacilityPicker.projection"),
 ];
 
@@ -274,6 +275,7 @@ export function formatInsureeGQL(mm, insuree) {
         : ""
     }
     ${!!insuree.isPregnant ? `isPregnant: ${insuree.isPregnant}` : ""}
+    ${!!insuree.isFormalSector ? `isFormalSector: ${insuree.isFormalSector}` : ""}
     ${!!insuree.jsonExt ? `jsonExt: ${formatJsonField(insuree.jsonExt)}` : ""}
   `;
 }
